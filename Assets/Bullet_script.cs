@@ -17,19 +17,21 @@ public class Bullet_script : MonoBehaviour
     void Update()
     {
         if (Input.GetMouseButtonDown(0)){
-			Vector2 mousePos = Input.mousePosition;
-			Debug.Log(mousePos.x);
-			Debug.Log(mousePos.y);
-			goal = new Vector2 (mousePos.x/2,mousePos.y/2);
+			Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			Debug.Log("");
+			Debug.Log(worldPosition.x);
+			Debug.Log(worldPosition.y);
+			goal = new Vector2 (worldPosition.x,worldPosition.y);
+			
 			//inTravel = true;
 		}
 		if (Input.GetKeyDown(KeyCode.A)){
-			transform.position += -transform.right * Time.deltaTime * speed;
+			transform.position += transform.forward * Time.deltaTime * speed;
+			transform.LookAt(goal, Vector2.up);
 			inTravel = !inTravel;
 		}
 		if (inTravel) {
-			//transform.LookAt(goal,Vector2.left);
-			transform.position += -transform.right * Time.deltaTime * speed;
+			transform.position += transform.forward * Time.deltaTime * speed;
 
 			//inTravel = false;
 		}
